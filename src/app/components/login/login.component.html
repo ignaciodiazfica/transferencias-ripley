@@ -1,1 +1,21 @@
-<p>login works!</p>
+<div class="p-grid p-jc-center">
+  <div class="p-fluid">
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <h2>Iniciar Sesión</h2>
+      <div class="p-field">
+        <label for="username">Nombre de Usuario</label>
+        <input id="username" type="text" formControlName="username" pInputText />
+      </div>
+      <div class="p-field">
+        <label for="pwd">Contraseña</label>
+        <p-password
+          id="pwd"
+          formControlName="password"
+          [toggleMask]="true"
+          [feedback]="false"
+        ></p-password>
+      </div>
+      <button pButton type="submit" label="Iniciar Sesión" [disabled]="loginForm.invalid" ></button>
+    </form>
+  </div>
+</div>
