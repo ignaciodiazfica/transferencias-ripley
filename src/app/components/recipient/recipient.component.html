@@ -1,1 +1,20 @@
-<p>recipient works!</p>
+<p-table [value]="recipients">
+  <ng-template pTemplate="header">
+      <tr>
+          <th>Rut</th>
+          <th>Nombre</th>
+          <th>Banco</th>
+          <th>Tipo de Cuenta</th>
+          <th>Numero de Cuenta</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-recipient>
+      <tr>
+          <td>{{recipient.rut}}</td>
+          <td>{{recipient.name}}</td>
+          <td>{{recipient.bank}}</td>
+          <td>{{recipient.typeAccount[0].name}}</td>
+          <td>{{recipient.accountNumber}}</td>
+      </tr>
+  </ng-template>
+</p-table>
