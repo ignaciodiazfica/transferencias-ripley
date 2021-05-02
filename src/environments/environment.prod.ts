@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://link-produccion.com/api'
+  apiUrl: 'https://immense-shore-27636.herokuapp.com'
 };
