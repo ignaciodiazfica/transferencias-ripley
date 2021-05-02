@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.config.json --open",
+    "start": "ng serve --proxy-config proxy.config.json",
     "start:prod": "node server.js",
-    "build": "ng build --proxy-config proxy.config.json --aot --prod --build-optimizer",
+    "build":"ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
