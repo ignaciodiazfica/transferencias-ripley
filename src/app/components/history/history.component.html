@@ -1,0 +1,22 @@
+<div class="card p-3">
+  <p-table [value]="formHistory">
+    <ng-template pTemplate="header">
+      <tr>
+        <th id="name">Nombre destinatario</th>
+        <th id="rut">RUT</th>
+        <th id="banco">Banco</th>
+        <th id="typeAccount">Tipo de Cuenta</th>
+        <th id="monto">Monto</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-history>
+      <tr>
+        <td>{{ history.name }}</td>
+        <td>{{ history.rut }}</td>
+        <td>{{ history.bank }}</td>
+        <td>{{ history.typeAccount }}</td>
+        <td>${{ history.amount | number}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

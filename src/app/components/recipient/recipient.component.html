@@ -1,20 +1,153 @@
-<p-table [value]="recipients">
-  <ng-template pTemplate="header">
+<div class="card p-3">
+  <p-table [value]="recipients">
+    <ng-template pTemplate="caption">
+      <div class="d-flex bd-highlight">
+        <button
+          (click)="handleNewRecipient()"
+          style="margin-right: 0.5em"
+          class="mb-2 mr-2 btn-icon btn-outline-2x btn btn-outline-success"
+        >
+          <em class="fas fa-plus font-icon-2x"></em>
+          <span class="ml-1"> <strong> Nuevo destinario</strong></span>
+        </button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
       <tr>
-          <th>Rut</th>
-          <th>Nombre</th>
-          <th>Banco</th>
-          <th>Tipo de Cuenta</th>
-          <th>Numero de Cuenta</th>
+        <th id="rut">Rut</th>
+        <th id="name">Nombre</th>
+        <th id="bank">Banco</th>
+        <th id="typeAccount">Tipo de Cuenta</th>
+        <th id="accountNumber">Numero de Cuenta</th>
       </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-recipient>
+    </ng-template>
+    <ng-template pTemplate="body" let-recipient>
       <tr>
-          <td>{{recipient.rut}}</td>
-          <td>{{recipient.name}}</td>
-          <td>{{recipient.bank}}</td>
-          <td>{{recipient.typeAccount[0].name}}</td>
-          <td>{{recipient.accountNumber}}</td>
+        <td>{{ recipient.rut }}</td>
+        <td>{{ recipient.name }}</td>
+        <td>{{ recipient.bank }}</td>
+        <td>{{ recipient.typeAccount[0].name }}</td>
+        <td>{{ recipient.accountNumber }}</td>
       </tr>
-  </ng-template>
-</p-table>
+    </ng-template>
+  </p-table>
+</div>
+<p-dialog
+  header="Nuevo destinatario"
+  [(visible)]="showNewRecipient"
+  [style]="{ width: '75vw' }"
+  [modal]="true"
+  [maximizable]="true"
+  [draggable]="false"
+  (onHide)="recipientForm.reset()"
+>
+  <div [formGroup]="recipientForm">
+    <div class="row form-row mb-3">
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="rut">RUT</label>
+        <input
+          id="rut"
+          formControlName="rut"
+          type="text"
+          [style]="{ width: '100%', height: '50px' }"
+          class="form-control"
+          pInputText
+          placeholder="12.345.678-9"
+          [maxlength]="12"
+          (change)="handleCheckRut($event)"
+          (keypress)="handleRutNoCharacters($event)"
+        />
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="name">Nombre</label>
+        <input
+          id="name"
+          formControlName="name"
+          type="text"
+          [style]="{ width: '100%', height: '50px' }"
+          class="form-control"
+          pInputText
+        />
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="email">Correo electrónico</label>
+        <input
+          id="email"
+          formControlName="email"
+          type="email"
+          [style]="{ width: '100%', height: '50px' }"
+          class="form-control"
+          pInputText
+        />
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="phone">Teléfono</label>
+        <input
+          id="phone"
+          formControlName="phone"
+          type="text"
+          [style]="{ width: '100%', height: '50px' }"
+          class="form-control"
+          pInputText
+        />
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="bank">Banco</label>
+        <p-dropdown
+          formControlName="bank"
+          [style]="{ width: '100%', height: '50px' }"
+          id="bank"
+          [filter]="false"
+          [options]="banks"
+          placeholder="Seleccione un banco"
+          optionLabel="name"
+          appendTo="body"
+          [showClear]="true"
+        ></p-dropdown>
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="typeAccount">Tipo de cuenta</label>
+        <p-dropdown
+          formControlName="typeAccount"
+          [style]="{ width: '100%', height: '50px' }"
+          id="typeAccount"
+          [filter]="false"
+          [options]="typeAccounts"
+          placeholder="Seleccione tipo de cuenta"
+          optionLabel="name"
+          appendTo="body"
+          [showClear]="true"
+        ></p-dropdown>
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="accountNumber">Numero de cuenta</label>
+        <input
+          id="accountNumber"
+          formControlName="accountNumber"
+          type="text"
+          [style]="{ width: '100%', height: '50px' }"
+          class="form-control"
+          pInputText
+        />
+      </div>
+    </div>
+  </div>
+  <p-footer class="mt-3">
+    <button
+      (click)="onHide()"
+      class="mb-2 btn-icon btn btn-danger pull-right"
+    >
+      <em class="fas fa-times font-icon-2x"></em>
+      Cerrar
+    </button>
+    <button
+      [disabled]="recipientForm.invalid"
+      (click)="saveRecipient()"
+      class="mb-2 btn-icon btn btn-success pull-right"
+    >
+      <em class="fas fa-save font-icon-2x"></em>
+      Guardar
+    </button>
+  </p-footer>
+</p-dialog>

@@ -21,6 +21,10 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      this.router.navigate(['/home']);
+    }
     this.initForm();
   }
 
@@ -42,14 +46,14 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.loginForm.value);
     this.authService
       .login(this.loginForm.value.username, this.loginForm.value.password)
       .subscribe(
         (res) => {
           if (res && res.token) {
             localStorage.setItem('jwtToken', res.token);
-            this.router.navigate(['/recipient']);
+            this.router.navigate(['/home']);
+            window.location.reload();
           }
         },
         () => {

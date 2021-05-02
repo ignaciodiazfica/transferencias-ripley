@@ -1,6 +1,6 @@
 {
   "/api/*": {
-    "target": "http://localhost:3001",
+    "target": "https://immense-shore-27636.herokuapp.com",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true

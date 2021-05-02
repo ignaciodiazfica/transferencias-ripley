@@ -31,13 +31,12 @@ export class AuthInterceptorService implements HttpInterceptor {
         },
       });
     }else{
-      console.log('No encuentra token')
+      console.log('no estoy autenticado')
     }
-
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
         if (err.status === 401) {
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/login');
         }
 
         return throwError(err);

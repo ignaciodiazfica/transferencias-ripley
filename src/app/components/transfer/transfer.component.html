@@ -1,1 +1,56 @@
-<p>transfer works!</p>
+<div class="card-p-3">
+  <div [formGroup]="transferForm">
+    <div class="d-flex justify-content-between">
+      <div class="col form-col mb-3">
+        <div class="form-group col-sm-12 col-md-6">
+          <label for="recipient">Buscar destinatario</label>
+          <p-dropdown
+            formControlName="recipient"
+            [style]="{ width: '120%', height: '50px' }"
+            id="recipient"
+            [filter]="false"
+            [options]="recipients"
+            placeholder="Seleccione un destinatario"
+            optionLabel="name"
+            appendTo="body"
+            (onChange)="handleOnChangeRecipient($event)"
+            [showClear]="true"
+          ></p-dropdown>
+        </div>
+        <div class="form-group col-sm-12 col-md-6">
+          <label for="amount">Monto</label>
+          <p-inputNumber
+            id="amount"
+            formControlName="amount"
+            mode="currency"
+            [style]="{ width: '120%', height: '50px' }"
+            currency="CLP"
+            locale="es-CL"
+            [min]="0"
+          ></p-inputNumber>
+        </div>
+      </div>
+      <div class="col form-col">
+        <h2>Datos de transferencia</h2>
+        <div *ngIf="selectedRecipient">
+          <p><strong>Nombre:</strong> {{ selectedRecipient.name }}</p>
+          <p><strong>Correo:</strong>{{ selectedRecipient.email }}</p>
+          <p><strong>Banco:</strong> {{ selectedRecipient.bank }}</p>
+          <p>
+            <strong>Tipo de Cuenta:</strong>
+            {{ selectedRecipient.typeAccount[0].name }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <button
+      [disabled]="transferForm.invalid"
+      (click)="sendTransfer()"
+      class="mb-2 btn-icon btn btn-success pull-right"
+    >
+      <em class="fas fa-save font-icon-2x"></em>
+      Guardar
+    </button>
+  </div>
+</div>

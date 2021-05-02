@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ComponentsModule } from './components/components.module';
@@ -14,10 +16,12 @@ import { UserService } from './services/user.service';
 import { MessageService } from 'primeng/api';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +29,7 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     AppRoutingModule,
     ComponentsModule,
     HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [
     Title,
