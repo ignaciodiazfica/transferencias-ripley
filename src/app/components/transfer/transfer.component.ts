@@ -5,6 +5,7 @@ import { take } from 'rxjs/operators';
 import { BankService } from 'src/app/services/bank.service';
 import { forkJoin } from 'rxjs';
 import { TransferService } from 'src/app/services/transfer.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-transfer',
@@ -14,13 +15,15 @@ import { TransferService } from 'src/app/services/transfer.service';
 export class TransferComponent implements OnInit {
   public transferForm: any;
   public selectedRecipient;
+  public recipientsEmpty = false;
   public recipients: any[] = [];
   public banks: any[] = [];
   constructor(
     private fb: FormBuilder,
     private recipientService: RecipientService,
     private bankService: BankService,
-    private transferService: TransferService
+    private transferService: TransferService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +43,9 @@ export class TransferComponent implements OnInit {
     ]);
     petitions.pipe(take(1)).subscribe((res) => {
       this.recipients = res[0];
+      if (this.recipients.length === 0) {
+        this.recipientsEmpty = true;
+      }
       this.banks = res[1];
     });
   }
@@ -57,9 +63,20 @@ export class TransferComponent implements OnInit {
         (res) => {
           console.log(res);
           this.transferForm.reset();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Transferencia realizada!',
+            detail: 'Su transferencia ha sido realizada correctamente'
+          })
         },
         (err) => {
           console.error(err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error al realizar la transferencia',
+            detail:
+              'La transferencia no ha sido realizada, intente nuevamente',
+          });
         }
       );
   }

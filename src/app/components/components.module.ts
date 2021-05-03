@@ -3,9 +3,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { DialogModule } from 'primeng/dialog';
-import {DropdownModule} from 'primeng/dropdown';
-import {InputNumberModule} from 'primeng/inputnumber';
-import {InputMaskModule} from 'primeng/inputmask';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputMaskModule } from 'primeng/inputmask';
+import {DividerModule} from 'primeng/divider';
+import { ToastModule } from 'primeng/toast';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
@@ -29,7 +31,9 @@ import { CommonModule } from '@angular/common';
     DropdownModule,
     CommonModule,
     InputNumberModule,
-    InputMaskModule
+    InputMaskModule,
+    ToastModule,
+    DividerModule
   ],
   exports: [
     InputTextModule,
@@ -41,7 +45,9 @@ import { CommonModule } from '@angular/common';
     TableModule,
     DropdownModule,
     InputNumberModule,
-    InputMaskModule
+    InputMaskModule,
+    ToastModule,
+    DividerModule
   ],
   declarations: [
     LoginComponent,

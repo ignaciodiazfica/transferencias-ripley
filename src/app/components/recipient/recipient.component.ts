@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { forkJoin } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { BankService } from 'src/app/services/bank.service';
@@ -16,12 +17,14 @@ export class RecipientComponent implements OnInit {
   showNewRecipient = false;
   banks: any[] = [];
   typeAccounts: any[] = [];
+  tipoCuentas: any[] = [];
   rutMask;
   constructor(
     private recipientService: RecipientService,
     private bankService: BankService,
     private typeAccountService: TypeAccountService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -81,16 +84,27 @@ export class RecipientComponent implements OnInit {
       .pipe(take(1))
       .subscribe(
         () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Creado correctamente',
+            detail: 'Su destinatario ha sido creado correctamente',
+          });
           this.showNewRecipient = false;
           this.getDataDefault();
         },
         (err) => {
           console.error(err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail:
+              'La creación de su destinatario ha fallado, intente nuevamente',
+          });
         }
       );
   }
 
-  onHide(){
+  onHide() {
     this.showNewRecipient = false;
   }
 
@@ -117,8 +131,8 @@ export class RecipientComponent implements OnInit {
   }
   handleMaskRut(event) {
     let rut = event.target.value;
-    let primerosDigitos = rut.split('.')[0]
-    console.log(primerosDigitos)
+    let primerosDigitos = rut.split('.')[0];
+    console.log(primerosDigitos);
     if (primerosDigitos < 10) {
       this.rutMask = '9.999.999-*';
     }
@@ -126,5 +140,16 @@ export class RecipientComponent implements OnInit {
   }
   get rut() {
     return this.recipientForm.get('rut');
+  }
+
+  handleChangeBank(event) {
+    let banco = event.value;
+    if (banco.id !== '0000003' || banco.name !== 'Banco Estado') {
+      this.tipoCuentas = this.typeAccounts.filter(
+        (type) => type.name !== 'Cuenta RUT'
+      );
+    } else {
+      this.tipoCuentas = this.typeAccounts;
+    }
   }
 }

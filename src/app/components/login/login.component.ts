@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -12,12 +14,14 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
   public loginForm: any;
   public submitted = false;
-
+  public showNewUser = false;
+  public signUpForm: any;
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -40,6 +44,19 @@ export class LoginComponent implements OnInit {
         ],
       ],
     });
+
+    this.signUpForm = this.fb.group({
+      name: ['', Validators.required],
+      username: ['', Validators.required],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
+      ],
+    });
   }
   get form() {
     return this.loginForm.controls;
@@ -52,9 +69,14 @@ export class LoginComponent implements OnInit {
         (res) => {
           if (res && res.token) {
             localStorage.setItem('jwtToken', res.token);
-            this.router.navigate(['/home']);
-            window.location.reload();
           }
+          this.router.navigate(['/home']);
+          window.location.reload();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Bienvenido',
+            detail: 'Ha iniciado sesión correctamente',
+          });
         },
         () => {
           this.messageService.add({
@@ -73,5 +95,37 @@ export class LoginComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.loginForm.reset();
+  }
+
+  handleSignUpButtom() {
+    this.showNewUser = true;
+  }
+
+  saveNewUser() {
+    console.log('nuevo usuario registrado');
+    let newUser = this.signUpForm.value;
+    console.log(newUser);
+
+    this.userService
+      .postUser(newUser)
+      .pipe(take(1))
+      .subscribe(
+        (res) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Registrado correctamente',
+            detail: 'Se ha registrado correctamente',
+          });
+          this.showNewUser = false;
+        },
+        (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error al registrarse',
+            detail:
+              'Parece que ha habido un error... \nPor favor intente nuevamente',
+          });
+        }
+      );
   }
 }

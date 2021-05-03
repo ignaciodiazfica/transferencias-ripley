@@ -13,8 +13,10 @@
             placeholder="Seleccione un destinatario"
             optionLabel="name"
             appendTo="body"
+            [disabled]="recipientsEmpty"
             (onChange)="handleOnChangeRecipient($event)"
             [showClear]="true"
+            emptyFilterMessage="No se ha encontrado ningun destinatario..."
           ></p-dropdown>
         </div>
         <div class="form-group col-sm-12 col-md-6">
@@ -54,3 +56,4 @@
     </button>
   </div>
 </div>
+<p-toast></p-toast>

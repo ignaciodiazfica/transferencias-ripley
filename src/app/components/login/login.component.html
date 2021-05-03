@@ -4,7 +4,12 @@
       <h2>Iniciar Sesión</h2>
       <div class="p-field">
         <label for="username">Nombre de Usuario</label>
-        <input id="username" type="text" formControlName="username" pInputText />
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          pInputText
+        />
       </div>
       <div class="p-field">
         <label for="pwd">Contraseña</label>
@@ -15,7 +20,92 @@
           [feedback]="false"
         ></p-password>
       </div>
-      <button pButton type="submit" label="Iniciar Sesión" [disabled]="loginForm.invalid" ></button>
+      <button
+        pButton
+        type="submit"
+        label="Iniciar Sesión"
+        [disabled]="loginForm.invalid"
+        class="mb-3"
+      ></button>
+      <button
+        pButton
+        type="button"
+        (click)="handleSignUpButtom()"
+        label="Registrate!"
+        class="p-button-secondary"
+      ></button>
     </form>
   </div>
 </div>
+<p-dialog
+  header="Nuevo usuario"
+  [(visible)]="showNewUser"
+  [modal]="true"
+  [maximizable]="false"
+  [draggable]="false"
+  (onHide)="signUpForm.reset()"
+>
+  <div [formGroup]="signUpForm" class="mx-3">
+    <div class="col form-col">
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="name">Nombre Completo</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          pInputText
+          [style]="{ width: '200%', height: '50px' }"
+        />
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="username">Nombre de Usuario</label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          pInputText
+          [style]="{ width: '200%', height: '50px' }"
+        />
+      </div>
+      <div class="form-group col-sm-12 col-md-6">
+        <label for="pwd">Contraseña</label>
+        <p-password
+          id="pwd"
+          formControlName="password"
+          [toggleMask]="true"
+          [feedback]="true"
+          weakLabel="Debil"
+          mediumLabel="Media"
+          strongLabel="Fuerte"
+          appendTo="body"
+          [inputStyle]="{width: '200%'}"
+          [style]="{ width: '200%', height: '50px' }"
+        >
+          <ng-template pTemplate="header">
+            <h6>Elige una contraseña</h6>
+          </ng-template>
+          <ng-template pTemplate="footer">
+            <p class="p-mt-2">Sugerencias:</p>
+            <ul class="p-pl-2 p-ml-2 p-mt-0" style="line-height: 1.5">
+              <li>Al menos un caracter en mayusculas</li>
+              <li>Al menos un caracter en minusculas</li>
+              <li>Al menos un caracter numérico</li>
+              <li>Minimo 8 caracteres</li>
+            </ul>
+          </ng-template>
+        </p-password>
+      </div>
+    </div>
+    <p-footer>
+      <button
+        [disabled]="signUpForm.invalid"
+        (click)="saveNewUser()"
+        class="mb-2 btn-icon btn btn-success pull-right"
+      >
+        <em class="fas fa-save font-icon-2x"></em>
+        Guardar
+      </button>
+    </p-footer>
+  </div>
+</p-dialog>
+<p-toast></p-toast>

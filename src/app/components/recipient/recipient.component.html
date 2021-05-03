@@ -67,6 +67,7 @@
           type="text"
           [style]="{ width: '100%', height: '50px' }"
           class="form-control"
+          placeholder= "Ingrese nombre completo"
           pInputText
         />
       </div>
@@ -78,6 +79,7 @@
           type="email"
           [style]="{ width: '100%', height: '50px' }"
           class="form-control"
+          placeholder= "Ingrese correo electrónico"
           pInputText
         />
       </div>
@@ -89,6 +91,7 @@
           type="text"
           [style]="{ width: '100%', height: '50px' }"
           class="form-control"
+          placeholder= "Ingrese número telefónico"
           pInputText
         />
       </div>
@@ -103,6 +106,7 @@
           placeholder="Seleccione un banco"
           optionLabel="name"
           appendTo="body"
+          (onChange)="handleChangeBank($event)"
           [showClear]="true"
         ></p-dropdown>
       </div>
@@ -113,7 +117,7 @@
           [style]="{ width: '100%', height: '50px' }"
           id="typeAccount"
           [filter]="false"
-          [options]="typeAccounts"
+          [options]="tipoCuentas"
           placeholder="Seleccione tipo de cuenta"
           optionLabel="name"
           appendTo="body"
@@ -128,6 +132,7 @@
           type="text"
           [style]="{ width: '100%', height: '50px' }"
           class="form-control"
+          placeholder= "Ingrese numero de cuenta"
           pInputText
         />
       </div>
@@ -151,3 +156,4 @@
     </button>
   </p-footer>
 </p-dialog>
+<p-toast></p-toast>
