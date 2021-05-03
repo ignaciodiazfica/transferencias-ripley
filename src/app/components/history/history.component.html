@@ -1,5 +1,5 @@
 <div class="card p-3">
-  <p-table [value]="formHistory">
+  <p-table [value]="historyTable">
     <ng-template pTemplate="header">
       <tr>
         <th id="name">Nombre destinatario</th>
@@ -10,12 +10,19 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-history>
-      <tr>
+      <tr *ngIf="!emptyTable">
         <td>{{ history.name }}</td>
         <td>{{ history.rut }}</td>
         <td>{{ history.bank }}</td>
         <td>{{ history.typeAccount }}</td>
-        <td>${{ history.amount | number}}</td>
+        <td>${{ history.amount | number }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="footer" let-columns>
+      <tr *ngIf="emptyTable">
+        <td style="text-align: center;" [attr.colspan]="5">
+          Aún no tienes transferencias para mostrar...
+        </td>
       </tr>
     </ng-template>
   </p-table>

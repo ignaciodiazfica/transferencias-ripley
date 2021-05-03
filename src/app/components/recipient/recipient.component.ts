@@ -13,12 +13,13 @@ import { TypeAccountService } from 'src/app/services/type-account.service';
 })
 export class RecipientComponent implements OnInit {
   public recipientForm: any;
-  recipients: any[] = [];
-  showNewRecipient = false;
-  banks: any[] = [];
-  typeAccounts: any[] = [];
-  tipoCuentas: any[] = [];
-  rutMask;
+  public recipients: any[] = [];
+  public showNewRecipient = false;
+  public banks: any[] = [];
+  public typeAccounts: any[] = [];
+  public tipoCuentas: any[] = [];
+  public rutMask;
+  public emptyTable = false;
   constructor(
     private recipientService: RecipientService,
     private bankService: BankService,
@@ -58,6 +59,9 @@ export class RecipientComponent implements OnInit {
         this.recipients.forEach((item) => {
           item.bank = this.banks.filter((b) => b.id === item.bank)[0].name;
         });
+        if (this.recipients.length === 0) {
+          this.emptyTable = true;
+        }
       },
       (err) => {
         console.error(err);
@@ -132,7 +136,6 @@ export class RecipientComponent implements OnInit {
   handleMaskRut(event) {
     let rut = event.target.value;
     let primerosDigitos = rut.split('.')[0];
-    console.log(primerosDigitos);
     if (primerosDigitos < 10) {
       this.rutMask = '9.999.999-*';
     }

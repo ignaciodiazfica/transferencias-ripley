@@ -32,7 +32,10 @@ export class TransferComponent implements OnInit {
   }
   initForm() {
     this.transferForm = this.fb.group({
-      recipient: [null, Validators.required],
+      recipient: [
+        { value: null, disabled: this.recipientsEmpty },
+        Validators.required,
+      ],
       amount: ['', Validators.required],
     });
   }
@@ -61,21 +64,19 @@ export class TransferComponent implements OnInit {
       .pipe(take(1))
       .subscribe(
         (res) => {
-          console.log(res);
           this.transferForm.reset();
           this.messageService.add({
             severity: 'success',
             summary: 'Transferencia realizada!',
-            detail: 'Su transferencia ha sido realizada correctamente'
-          })
+            detail: 'Su transferencia ha sido realizada correctamente',
+          });
         },
         (err) => {
           console.error(err);
           this.messageService.add({
             severity: 'error',
             summary: 'Error al realizar la transferencia',
-            detail:
-              'La transferencia no ha sido realizada, intente nuevamente',
+            detail: 'La transferencia no ha sido realizada, intente nuevamente',
           });
         }
       );

@@ -102,9 +102,7 @@ export class LoginComponent implements OnInit {
   }
 
   saveNewUser() {
-    console.log('nuevo usuario registrado');
     let newUser = this.signUpForm.value;
-    console.log(newUser);
 
     this.userService
       .postUser(newUser)

@@ -30,8 +30,6 @@ export class AuthInterceptorService implements HttpInterceptor {
           authorization: `Bearer ${token}`,
         },
       });
-    }else{
-      console.log('no estoy autenticado')
     }
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {

@@ -10,7 +10,8 @@ import { TransferService } from 'src/app/services/transfer.service';
   styleUrls: ['./history.component.css'],
 })
 export class HistoryComponent implements OnInit {
-  public formHistory: any[] = [];
+  public emptyTable = false;
+  public historyTable: any[] = [];
   public historial: any[] = [];
   public banks: any[] = [];
   constructor(
@@ -34,15 +35,18 @@ export class HistoryComponent implements OnInit {
         this.banks = res[1];
         this.historial.forEach((item) => {
           item.recipient.forEach((rec) => {
-            this.formHistory.push({
+            this.historyTable.push({
               bank: this.banks.filter((b) => b.id === rec.bank)[0].name,
               name: rec.name,
               rut: rec.rut,
               typeAccount: rec.typeAccount[0].name,
-              amount: item.amount
-            })
+              amount: item.amount,
+            });
           });
         });
+        if (this.historial.length === 0) {
+          this.emptyTable = true;
+        }
       },
       (err) => {
         console.error(err);
